@@ -29,6 +29,7 @@
 import pytest
 import allure
 from tools.excelControl import get_excel_data
+from tools.yamlControl import get_yaml_caseData
 from libs.login import Login
 import os
 class TestLogin:
@@ -36,7 +37,10 @@ class TestLogin:
     # 数据驱动--参数化--读取用例数据
     # @pytest.mark.parametrize('参数的变量名',实际需要传入的参数)
     # @pytest.mark.parametrize('a,b,c',[(1,2,3),(4,5,6)])
-    @pytest.mark.parametrize('inBody,expData',get_excel_data('../data/delivery47.xls', '登录模块','Login','请求参数', '响应预期结果'))
+
+    @pytest.mark.login
+    @pytest.mark.parametrize('inBody,expData',get_yaml_caseData('../data/data.yaml'))  # 用yaml读取用例
+    # @pytest.mark.parametrize('inBody,expData',get_excel_data('../data/delivery47.xls', '登录模块','Login','请求参数', '响应预期结果'))
     def test_login(self,inBody,expData):
         # 调用接口代码
         res = Login().login(inBody)  # 请求体传入--调用登录接口
